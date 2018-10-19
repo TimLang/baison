@@ -9,7 +9,7 @@ module Baison
         args.merge!({page_size: 100})
         super(args) do |data|
           array = []
-          data.values.each do |v|
+          data.each do |v|
             array << self.new(v)
           end
           array
