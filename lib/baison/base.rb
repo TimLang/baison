@@ -68,6 +68,30 @@ module Baison
         a
       end
 
+
+      def _doit(options)
+        a = Array.new
+        json = connection.post(self.resource, options)
+        if json['status'].to_s != '1'
+          raise ::StandardError.new(json)
+        end
+        begin
+          data = json['data']['data']
+        rescue
+          raise ::StandardError.new(json)
+        end
+
+
+        if block_given?
+          a = yield data
+        else
+          data.each do |row|
+            a << self.new(row)
+          end
+        end
+        a
+      end
+
     end
 
     def _assign_attribute(k, v)

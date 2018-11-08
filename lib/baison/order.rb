@@ -32,6 +32,19 @@ module Baison
         self.resource = "oms.order.search.get"
         super(args)
       end
+
+      def cancel deal_code, desc="客户取消订单"
+        self.resource = 'oms.order.cancel'
+        args = {sell_record_code: deal_code, cancel_flag: 1, desc: desc}
+        _doit(args)
+      end
+
+      def intercep deal_code, desc="客户取消订单，请拦截"
+        self.resource = 'oms.order.intercep'
+        args = {sell_record_code: deal_code, desc: desc}
+        _doit(args)
+      end
+
     end
 
   end
